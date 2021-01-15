@@ -1,0 +1,37 @@
+#!/bin/bash
+
+read -p "Local Server Setup, only run this if you want to reset your database.  Continue [y/n]:" proceed
+
+if [ "$proceed" == "y" ] || [ "$proceed" == "Y" ]; then
+
+	source ./local-env
+
+	echo
+    echo "*************************************************************************"
+    echo " Stop and remove existing containers and volumes                         "
+    echo "*************************************************************************"
+    echo
+
+    docker stop $DOCKER_CONTAINER
+    docker rm  $DOCKER_CONTAINER
+    docker volume rm $DOCKER_VOLUME_NAME
+
+    echo
+	echo "*************************************************************************"
+	echo "Create Docker container $DOCKER_CONTAINER                                "
+	echo "*************************************************************************"
+	echo
+
+	sleep 2s
+
+	docker run --name $DOCKER_CONTAINER -p $DOCKER_POSTGRES_PORT:5432/tcp -e POSTGRES_DATABASE_NAME="$DATABASE_NAME" -e POSTGRES_USER="$JDBC_DATABASE_USERNAME" -e POSTGRES_PASSWORD="$JDBC_DATABASE_PASSWORD" -e POSTGRES_DB="$DATABASE_NAME" -v $DOCKER_VOLUME_NAME:/var/lib/postgresql/data -d postgres:12.5
+
+	echo
+	echo "*************************************************************************"
+	echo "Create Docker container $DOCKER_CONTAINER done                            "
+	echo "*************************************************************************"
+
+	./mvnw clean verify
+
+fi
+

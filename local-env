@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Import local private environment variables
+#source ./local-env-private
+
+export DOCKER_CONTAINER=jwt-demo-postgres
+export DOCKER_POSTGRES_PORT=8999
+export DOCKER_VOLUME_NAME=jwt-demo-postgres-pgdata
+export DATABASE_NAME=jwt_demo
+export JDBC_DATABASE_USERNAME=db_user
+export JDBC_DATABASE_PASSWORD=abc123
+export JDBC_DATABASE_URL="jdbc:postgresql://localhost:${DOCKER_POSTGRES_PORT}/${DATABASE_NAME}?currentSchema=demo&reWriteBatchedInserts=true"
