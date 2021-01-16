@@ -1,9 +1,10 @@
 package com.sevensummits.jwt.demo.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sevensummits.jwt.demo.global.json.Views;
+
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,9 +13,13 @@ public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    @JsonView(Views.Public.class)
     private UUID id;
 
+    @JsonView(Views.Public.class)
     private String username;
+
     private String password;
 
     public static ApplicationUser from(final String username, final String password) {
