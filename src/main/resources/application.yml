@@ -1,8 +1,19 @@
 spring:
-  profiles:
-    active: default
 
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+
+  flyway:
+    sql-migration-prefix: "demo-"
+    sql-migration-separator: "_"
+    schemas: "demo"
+
+  jpa:
+    open-in-view: false
+
+application:
+  security:
+    tokenSecretKey: ${random.value}
+    tokenExpirationTimeout: ${JWT_EXPIRATION:86400}
