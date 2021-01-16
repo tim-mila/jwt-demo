@@ -9,7 +9,7 @@ public class UserRegistrationDto {
     private final String password;
 
     @JsonCreator
-    UserRegistrationDto(@JsonProperty  final String username, @JsonProperty final String password) {
+    UserRegistrationDto(@JsonProperty final String username, @JsonProperty final String password) {
         this.username = username;
         this.password = password;
     }
